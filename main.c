@@ -85,6 +85,7 @@ int main(int argc, char **argv) {
 		fread(buf, 1, le(fd[i].Size), input);
 		fwrite(buf, 1, le(fd[i].Size), outf);
 		fclose(outf);
+		free(buf);
 	}
 
 	puts("\nDone!");
