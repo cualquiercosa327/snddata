@@ -26,6 +26,7 @@ typedef struct FileDesc {
 	char Padding[24];
 } FileDesc;
 
+/* Gamecube is big endian, so this'll flip the endianness of an input u32. */
 uint32_t le(uint32_t be) {
 	return (be & 0xff) << 24 | (be & 0xff00) << 8 | (be & 0xff0000) >> 8 | (be & 0xff000000) >> 24;
 }
@@ -65,7 +66,7 @@ int main(int argc, char **argv) {
 
 	hdr.FileCount = le(hdr.FileCount);
 
-	FileDesc *fd = calloc(hdr.FileCount, sizeof*fd);
+	FileDesc *fd = malloc(hdr.FileCount * sizeof *fd);
 	fread(fd, sizeof(FileDesc), hdr.FileCount, input);
 
 	for (size_t i = 0; i < hdr.FileCount; i++) {
