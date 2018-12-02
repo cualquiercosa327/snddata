@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 #ifdef _WIN32
 	if (_mkdir(dirName)) {
 #else
-	if (_mkdir(dirName)) {
+	if (mkdir(dirName, 0777)) {
 #endif
 		fputs("Error: Failed to create directory.", stderr);
 		return 1;
